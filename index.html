@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student management</title>
+    <style>
+        .div{
+            font-size: 24px;
+        }
+        #navbar{
+            display: grid;
+        }
+    </style>
+</head>
+
+<body>
+    <button>
+        <a href="dash.html">Dashboard</a>
+    </button>
+    <div id="navbar">
+       
+
+    </div>
+    <form id="form">
+        <input type="text" id="name" placeholder="Enter your name">
+        <input type="text" id="course" placeholder="Enter your course">
+        <input type="number" id="unit" placeholder="Enter your unit">
+        <input type="url" src="url" alt="add image_urls" id="image" placeholder="Enter your image" />
+        <input type="text" id="batch" placeholder="Enter your batch">
+        <input type="submit"  name="" id="submit">
+    </form>
+
+</body>
+
+</html>
+<script>
+var submit =document.querySelector("#form");
+    submit.addEventListener("submit",submiting);
+
+    function submiting(e){
+        event.preventDefault();
+        let name=document.getElementById("name").value;
+        let course=document.getElementById("course").value
+        let unit=document.getElementById("unit").value
+        let image=document.getElementById("image").value
+        let batch=document.getElementById("batch").value
+   
+        var arr = JSON.parse(localStorage.getItem("studentdata") )|| [];
+       
+        var obj={
+            name:name,
+            course:course,
+            unit:unit,
+            image:image,
+            batch:batch,
+        }
+        arr.push(obj);
+        console.log(arr);
+        localStorage.setItem("studentdata",JSON.stringify(arr));
+    
+   }
+   let data = JSON.parse(localStorage.getItem("studentdata") )|| [];
+   console.log(data)
+   let obj={};
+     let bag=[];
+ for(let i=0;i<data.length;i++){
+    bag=[data[i].batch]
+    if(obj[bag]===undefined){
+        obj[bag]=1;
+    }
+    else{
+        obj[bag]++;
+
+    } 
+ }
+ let x;
+for(var key in obj ){
+     x=`${key}---${obj[key]}`
+    console.log(x)
+    let div=document.createElement("div")
+    div.setAttribute("class","div")
+    let navbar=document.getElementById("navbar");
+    div.append(x)
+    navbar.append(div);
+}
+ 
+ console.log(obj)
+ 
+ 
+ 
+
+</script>

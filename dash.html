@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        #datastudent{
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+        }
+    </style>
+</head>
+<body>
+    <a href="./index.html"><button>add more students</button></a>
+<div id="datastudent">
+
+</div>
+    
+</body>
+</html>
+<script>
+    function append(){
+    let data= JSON.parse(localStorage.getItem("studentdata") )|| [];
+    let container=document.getElementById("datastudent");
+    data.forEach(function(el,index){
+        let div=document.createElement("div");
+        div.setAttribute("class","box")
+        let img=document.createElement("img");
+        img.src=el.image;
+        img.setAttribute("class","img")
+        let p=document.createElement("p");
+        p.innerText=el.name;
+        p1=document.createElement("p");
+        p1.innerText=el.unit;
+        p2=document.createElement("p");
+        p2.innerText=el.course;
+        let btn=document.createElement("button");
+        btn.innerText="Remove";
+        btn.setAttribute("id","remove_student")
+        btn.addEventListener("click",function(){
+           remove(index);
+        //    el.splice(index,1);
+        //    localStorage.setItem("products",JSON.stringify(index));
+        })
+        div.append(img,p,p1,p2,btn);
+        container.append(div);
+    });
+
+}
+append();
+
+function remove(index){
+   
+
+    let data = JSON.parse(localStorage.getItem("studentdata") )|| [];
+   
+ let x=  data.splice(index,1);
+ console.log(x)
+    let data2=data.filter(function(el,ind){
+     if(ind==index){
+         let trash=JSON.parse(localStorage.getItem("trash"))||[];
+         trash.push(el);
+         localStorage.setItem("trash",JSON.stringify(trash))
+
+     }else{
+                 return ind!==index;
+     }        
+        
+    })
+    console.log(data);
+
+    
+    localStorage.setItem("studentdata",JSON.stringify(data));
+
+
+    let container=document.getElementById("datastudent");
+    container.innerText=null;
+    data.forEach(function(el,index){
+        let div=document.createElement("div");
+        div.setAttribute("class","box")
+        let img=document.createElement("img");
+        img.src=el.image;
+        img.setAttribute("class","img")
+        let p=document.createElement("p");
+        p.innerText=el.name;
+        p1=document.createElement("p");
+        p1.innerText=el.unit;
+        p2=document.createElement("p");
+        p2.innerText=el.course;
+        let btn=document.createElement("button");
+        btn.innerText="Remove";
+        btn.setAttribute("id","remove_student")
+        btn.addEventListener("click",function(){
+           remove(index);
+        //    el.splice(index,1);
+        //    localStorage.setItem("products",JSON.stringify(index));
+        })
+        div.append(img,p,p1,p2,btn);
+        container.append(div);
+    });
+ 
+    console.log(data2,data);
+}
+</script>
